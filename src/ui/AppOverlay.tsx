@@ -10,6 +10,8 @@ const AppShell: React.FC = () => {
   const bridge = usePlayCanvasBridge();
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
   const [splatCount, setSplatCount] = useState(0);
+  const [leftOpen, setLeftOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(false);
 
   // Listen for scene changes via the bridge
   useEffect(() => {
@@ -55,28 +57,42 @@ const AppShell: React.FC = () => {
       {/* Top Toolbar */}
       <header id="pf-toolbar">
         <TopToolbar />
-        <span className="pf-splat-count">{splatCount > 0 ? `${splatCount.toLocaleString()} splats` : ''}</span>
+        <div id="pf-toolbar-actions">
+          <button
+            className={`pf-toggle-btn ${leftOpen ? 'active' : ''}`}
+            onClick={() => setLeftOpen(o => !o)}
+            title={leftOpen ? 'Hide Scene Panel' : 'Show Scene Panel'}
+          >
+            <span className="pf-toggle-icon">{leftOpen ? '◀' : '▶'}</span>
+            <span className="pf-toggle-label">Scene</span>
+          </button>
+          <button
+            className={`pf-toggle-btn ${rightOpen ? 'active' : ''}`}
+            onClick={() => setRightOpen(o => !o)}
+            title={rightOpen ? 'Hide Properties' : 'Show Properties'}
+          >
+            <span className="pf-toggle-label">Properties</span>
+            <span className="pf-toggle-icon">{rightOpen ? '▶' : '◀'}</span>
+          </button>
+          <span className="pf-splat-count">{splatCount > 0 ? `${splatCount.toLocaleString()} splats` : ''}</span>
+        </div>
       </header>
 
       {/* Left Panel */}
-      <aside id="pf-left-panel">
-        {bridge.isReady ? (
+      <aside id="pf-left-panel" className={leftOpen ? 'pf-panel-open' : 'pf-panel-closed'}>
+        {bridge.isReady && leftOpen ? (
           <ScenePanel />
-        ) : (
-          <div className="pf-panel-placeholder">Loading engine...</div>
-        )}
+        ) : null}
       </aside>
 
       {/* Right Panel */}
-      <aside id="pf-right-panel">
-        {bridge.isReady ? (
+      <aside id="pf-right-panel" className={rightOpen ? 'pf-panel-open' : 'pf-panel-closed'}>
+        {bridge.isReady && rightOpen ? (
           <>
             <ViewPanel />
             <ColorPanel />
           </>
-        ) : (
-          <div className="pf-panel-placeholder">Loading...</div>
-        )}
+        ) : null}
       </aside>
 
       {/* Bottom Status Bar */}

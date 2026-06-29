@@ -13,8 +13,9 @@
 
 /* Interactive children get pointer events */
 #pf-toolbar,
-#pf-left-panel,
-#pf-right-panel,
+#pf-toolbar-actions,
+#pf-left-panel.pf-panel-open,
+#pf-right-panel.pf-panel-open,
 #pf-status-bar,
 .pf-dialog-overlay,
 .pf-panel-body {
@@ -27,12 +28,56 @@
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  padding: 0 12px 0 0;
+  padding: 0 4px 0 0;
   background: rgba(26, 26, 26, 0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   -webkit-app-region: drag;
   user-select: none;
+}
+
+#pf-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  -webkit-app-region: no-drag;
+}
+
+/* Toggle buttons for side panels */
+.pf-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #777;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.pf-toggle-btn:hover {
+  color: #ccc;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.pf-toggle-btn.active {
+  color: #f26722;
+  border-color: rgba(242, 103, 34, 0.3);
+  background: rgba(242, 103, 34, 0.1);
+}
+
+.pf-toggle-icon {
+  font-size: 9px;
+}
+
+.pf-toggle-label {
+  font-size: 11px;
 }
 
 .pf-brand {
@@ -97,10 +142,20 @@
   top: 40px;
   bottom: 28px;
   width: 240px;
-  background: rgba(22, 22, 22, 0.9);
+  background: rgba(22, 22, 22, 0.92);
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   overflow-y: auto;
+  transition: transform 0.25s ease;
+}
+
+#pf-left-panel.pf-panel-open {
+  transform: translateX(0);
+}
+
+#pf-left-panel.pf-panel-closed {
+  transform: translateX(-100%);
+  pointer-events: none;
 }
 
 /* Right Panel */
@@ -110,10 +165,20 @@
   top: 40px;
   bottom: 28px;
   width: 260px;
-  background: rgba(22, 22, 22, 0.9);
+  background: rgba(22, 22, 22, 0.92);
   border-left: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   overflow-y: auto;
+  transition: transform 0.25s ease;
+}
+
+#pf-right-panel.pf-panel-open {
+  transform: translateX(0);
+}
+
+#pf-right-panel.pf-panel-closed {
+  transform: translateX(100%);
+  pointer-events: none;
 }
 
 /* Panels */

@@ -78,17 +78,22 @@ test.describe('PointForge UI Interactions', () => {
     await expect(dialog).not.toBeVisible({ timeout: 5000 });
   });
 
-  test('panels contain expected titles', async ({ page }) => {
+  test('panels can be toggled and show content', async ({ page }) => {
     await page.goto('/');
     await waitForReactUI(page);
 
-    // Left panel should have scene panel
+    // Left panel is open by default, should show Scene Manager
     const leftPanel = page.locator('#pf-left-panel');
-    await expect(leftPanel).toBeVisible();
+    await expect(leftPanel).toHaveClass(/pf-panel-open/);
+    await expect(leftPanel).toContainText('Scene Manager');
 
-    // Right panel should contain View Options and Color Adjustments
+    // Right panel is closed by default - click to open
+    const toggleBtns = page.locator('.pf-toggle-btn');
+    await toggleBtns.last().click();
+    await page.waitForTimeout(400);
+
     const rightPanel = page.locator('#pf-right-panel');
-    await expect(rightPanel).toBeVisible();
+    await expect(rightPanel).toHaveClass(/pf-panel-open/);
     await expect(rightPanel).toContainText('View Options');
   });
 });

@@ -40,15 +40,36 @@ test.describe('PointForge E2E', () => {
     await expect(statusBar).toBeVisible();
   });
 
-  test('left and right panels render', async ({ page }) => {
+  test('panels toggle open and closed', async ({ page }) => {
     await page.goto('/');
     await waitForReactUI(page);
 
+    // Left panel starts open by default
     const leftPanel = page.locator('#pf-left-panel');
-    await expect(leftPanel).toBeVisible();
+    await expect(leftPanel).toHaveClass(/pf-panel-open/);
 
+    // Right panel starts closed by default
     const rightPanel = page.locator('#pf-right-panel');
-    await expect(rightPanel).toBeVisible();
+    await expect(rightPanel).toHaveClass(/pf-panel-closed/);
+
+    // Toggle buttons exist
+    const toggleBtns = page.locator('.pf-toggle-btn');
+    await expect(toggleBtns).toHaveCount(2);
+
+    // Click left toggle to close
+    await toggleBtns.first().click();
+    await page.waitForTimeout(400);
+    await expect(leftPanel).toHaveClass(/pf-panel-closed/);
+
+    // Click right toggle to open
+    await toggleBtns.last().click();
+    await page.waitForTimeout(400);
+    await expect(rightPanel).toHaveClass(/pf-panel-open/);
+
+    // Click left toggle to reopen
+    await toggleBtns.first().click();
+    await page.waitForTimeout(400);
+    await expect(leftPanel).toHaveClass(/pf-panel-open/);
   });
 
   test('overlay has pointer-events none', async ({ page }) => {
