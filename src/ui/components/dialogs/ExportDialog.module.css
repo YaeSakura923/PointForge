@@ -1,0 +1,37 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.option:hover {
+  border-color: #f26722;
+  background: #333;
+}
+
+.optionLabel {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.optionDesc {
+  font-size: 11px;
+  color: #888;
+}

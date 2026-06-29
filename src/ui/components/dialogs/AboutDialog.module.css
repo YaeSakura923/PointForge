@@ -1,0 +1,42 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f26722;
+  letter-spacing: -1px;
+}
+
+.version {
+  font-size: 12px;
+  color: #666;
+}
+
+.desc {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.tech span {
+  padding: 3px 10px;
+  background: #333;
+  border-radius: 12px;
+  font-size: 11px;
+  color: #ccc;
+}

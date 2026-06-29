@@ -1,6 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { PlayCanvasBridgeProvider, usePlayCanvasBridge } from './contexts/PlayCanvasBridge';
+import { TopToolbar } from './components/TopToolbar/TopToolbar';
+import { ScenePanel, ViewPanel, ColorPanel } from './components/panels';
+import { ExportDialog, AboutDialog, ShortcutsDialog } from './components/dialogs';
 import './AppOverlay.css';
 
 const AppShell: React.FC = () => {
@@ -9,7 +12,7 @@ const AppShell: React.FC = () => {
   const [splatCount, setSplatCount] = useState(0);
 
   // Listen for scene changes via the bridge
-  React.useEffect(() => {
+  useEffect(() => {
     if (!bridge.isReady) return;
     const unsub = bridge.on('splatCount', (count: number) => {
       setSplatCount(count);
@@ -17,11 +20,32 @@ const AppShell: React.FC = () => {
     return unsub;
   }, [bridge.isReady, bridge.on]);
 
-  const handleNew = useCallback(() => bridge.fire('new'), [bridge.fire]);
-  const handleOpen = useCallback(() => bridge.fire('open'), [bridge.fire]);
-  const handleSave = useCallback(() => bridge.fire('save'), [bridge.fire]);
-  const handleUndo = useCallback(() => bridge.fire('undo'), [bridge.fire]);
-  const handleRedo = useCallback(() => bridge.fire('redo'), [bridge.fire]);
+  // Listen for dialog events from the engine / shortcuts
+  useEffect(() => {
+    if (!bridge.isReady) return;
+
+    const subs = [
+      bridge.on('showShortcuts', () => setActiveDialog('shortcuts')),
+      bridge.on('showAbout', () => setActiveDialog('about')),
+      bridge.on('exportPly', () => setActiveDialog(null)),
+      bridge.on('exportSpz', () => setActiveDialog(null)),
+      bridge.on('exportSog', () => setActiveDialog(null))
+    ];
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '?' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        setActiveDialog(prev => prev === 'shortcuts' ? null : 'shortcuts');
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      subs.forEach(fn => fn());
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [bridge.isReady, bridge.on]);
+
   const handleExport = useCallback(() => setActiveDialog('export'), []);
 
   const closeDialog = useCallback(() => setActiveDialog(null), []);
@@ -30,42 +54,29 @@ const AppShell: React.FC = () => {
     <div id="pf-overlay-root">
       {/* Top Toolbar */}
       <header id="pf-toolbar">
-        <div id="pf-toolbar-left">
-          <span className="pf-brand">PointForge</span>
-          <nav className="pf-menu">
-            <button className="pf-btn" onClick={handleNew}>New</button>
-            <button className="pf-btn" onClick={handleOpen}>Open</button>
-            <button className="pf-btn" onClick={handleSave}>Save</button>
-            <button className="pf-btn" onClick={handleExport}>Export</button>
-          </nav>
-        </div>
-        <div id="pf-toolbar-center">
-          <button className="pf-btn pf-icon-btn" onClick={handleUndo} title="Undo">↩</button>
-          <button className="pf-btn pf-icon-btn" onClick={handleRedo} title="Redo">↪</button>
-        </div>
-        <div id="pf-toolbar-right">
-          <span className="pf-splat-count">{splatCount > 0 ? `${splatCount.toLocaleString()} splats` : ''}</span>
-        </div>
+        <TopToolbar />
+        <span className="pf-splat-count">{splatCount > 0 ? `${splatCount.toLocaleString()} splats` : ''}</span>
       </header>
 
       {/* Left Panel */}
       <aside id="pf-left-panel">
-        <div className="pf-panel">
-          <div className="pf-panel-header">Scene</div>
-          <div className="pf-panel-body" id="pf-scene-list">
-            {!bridge.isReady && <div className="pf-panel-placeholder">Loading engine...</div>}
-          </div>
-        </div>
+        {bridge.isReady ? (
+          <ScenePanel />
+        ) : (
+          <div className="pf-panel-placeholder">Loading engine...</div>
+        )}
       </aside>
 
       {/* Right Panel */}
       <aside id="pf-right-panel">
-        <div className="pf-panel">
-          <div className="pf-panel-header">Properties</div>
-          <div className="pf-panel-body" id="pf-props-panel">
-            {!bridge.isReady && <div className="pf-panel-placeholder">Loading...</div>}
-          </div>
-        </div>
+        {bridge.isReady ? (
+          <>
+            <ViewPanel />
+            <ColorPanel />
+          </>
+        ) : (
+          <div className="pf-panel-placeholder">Loading...</div>
+        )}
       </aside>
 
       {/* Bottom Status Bar */}
@@ -78,30 +89,17 @@ const AppShell: React.FC = () => {
         </span>
       </footer>
 
-      {/* Export Dialog */}
-      {activeDialog === 'export' && (
-        <div className="pf-dialog-overlay" onClick={closeDialog}>
-          <div className="pf-dialog" onClick={e => e.stopPropagation()}>
-            <div className="pf-dialog-header">
-              <h3>Export</h3>
-              <button className="pf-btn pf-icon-btn" onClick={closeDialog}>✕</button>
-            </div>
-            <div className="pf-dialog-body">
-              <div className="pf-export-options">
-                <button className="pf-btn pf-btn-primary" onClick={() => { bridge.fire('exportPly'); closeDialog(); }}>
-                  Export PLY
-                </button>
-                <button className="pf-btn pf-btn-primary" onClick={() => { bridge.fire('exportSpz'); closeDialog(); }}>
-                  Export SPZ
-                </button>
-                <button className="pf-btn pf-btn-primary" onClick={() => { bridge.fire('exportSog'); closeDialog(); }}>
-                  Export SOG
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Dialogs */}
+      <ExportDialog
+        open={activeDialog === 'export'}
+        onClose={closeDialog}
+        onExport={(format) => {
+          const event = format === 'ply' ? 'exportPly' : format === 'spz' ? 'exportSpz' : 'exportSog';
+          bridge.fire(event);
+        }}
+      />
+      <AboutDialog open={activeDialog === 'about'} onClose={closeDialog} />
+      <ShortcutsDialog open={activeDialog === 'shortcuts'} onClose={closeDialog} />
     </div>
   );
 };

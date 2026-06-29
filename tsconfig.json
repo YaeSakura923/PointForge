@@ -20,6 +20,7 @@
         "declaration": true,
         "declarationDir": "./dist/types",
         "baseUrl": ".",
+        "ignoreDeprecations": "6.0",
         "paths": {
             "@/*": ["./src/*"],
             "playcanvas": ["./node_modules/playcanvas/build/playcanvas/src/index.js"],

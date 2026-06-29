@@ -1,0 +1,81 @@
+.splatList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.empty {
+  color: #555;
+  font-style: italic;
+  font-size: 12px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.splatItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 12px;
+}
+
+.splatItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.splatItem.selected {
+  background: rgba(242, 103, 34, 0.15);
+  border: 1px solid rgba(242, 103, 34, 0.3);
+}
+
+.splatName {
+  flex: 1;
+  color: #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.splatCount {
+  color: #666;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.splatActions {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: #666;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.iconBtn.on {
+  color: #f26722;
+}
+
+.iconBtn.off {
+  opacity: 0.4;
+}
