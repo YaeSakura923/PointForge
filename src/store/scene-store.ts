@@ -1,5 +1,5 @@
 import { create, StateCreator } from 'zustand';
-import type { Element } from '../engine/element';
+import type { Element } from '../element';
 
 interface SceneStateData {
   elements: Element[];

@@ -1,5 +1,5 @@
 import { create, StateCreator } from 'zustand';
-import type { Splat } from '../engine/splat';
+import type { Splat } from '../splat';
 
 type SelectionMode = 'add' | 'remove' | 'set';
 

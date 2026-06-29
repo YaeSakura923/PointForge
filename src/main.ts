@@ -46,6 +46,7 @@ declare global {
             setConsumer: (callback: (launchParams: LaunchParams) => void) => void;
         };
         scene: Scene;
+        events: Events;
     }
 }
 
@@ -246,6 +247,7 @@ const main = async () => {
     editorUI.toolsContainer.dom.appendChild(maskCanvas);
 
     window.scene = scene;
+    window.events = events;
 
     // register events that need scene or other dependencies
     registerEditorEvents(events, editHistory, scene);
