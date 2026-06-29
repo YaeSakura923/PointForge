@@ -1,0 +1,70 @@
+{
+    "name": "pointforge",
+    "version": "3.0.0",
+    "author": "YaeSakura923 <YaeSakura923@gmail.com>",
+    "homepage": "https://github.com/YaeSakura923/PointForge",
+    "description": "PointForge - Professional 3D Point Cloud & Gaussian Splat Editor",
+    "keywords": [
+        "pointforge",
+        "ply",
+        "gaussian",
+        "splat",
+        "pointcloud",
+        "editor",
+        "3d",
+        "webgl",
+        "typescript",
+        "react"
+    ],
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "develop": "cross-env BUILD_TYPE=debug vite",
+        "lint": "eslint src",
+        "type-check": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:e2e": "playwright test",
+        "test:coverage": "vitest run --coverage"
+    },
+    "engines": {
+        "node": ">=20.19.0"
+    },
+    "dependencies": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "zustand": "^4.5.0",
+        "i18next": "26.3.0",
+        "i18next-browser-languagedetector": "8.2.1",
+        "i18next-http-backend": "3.0.6"
+    },
+    "devDependencies": {
+        "@playcanvas/eslint-config": "2.1.0",
+        "@playcanvas/splat-transform": "2.5.1",
+        "@playcanvas/pcui": "6.1.4",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "@types/wicg-file-system-access": "2023.10.7",
+        "@typescript-eslint/eslint-plugin": "8.60.1",
+        "@typescript-eslint/parser": "8.60.1",
+        "@vitejs/plugin-react": "^4.3.0",
+        "autoprefixer": "10.5.0",
+        "concurrently": "9.2.1",
+        "cross-env": "10.1.0",
+        "eslint": "10.4.1",
+        "eslint-import-resolver-typescript": "4.4.5",
+        "globals": "17.6.0",
+        "mediabunny": "1.46.0",
+        "playcanvas": "2.19.2",
+        "postcss": "8.5.15",
+        "sass": "1.100.0",
+        "tslib": "2.8.1",
+        "typescript": "6.0.3",
+        "vite": "^5.4.0",
+        "vitest": "^1.6.0",
+        "@playwright/test": "^1.45.0"
+    }
+}

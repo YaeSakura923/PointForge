@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "lib": ["es2022", "dom", "WebWorker"],
+        "jsx": "react-jsx",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": false,
+        "useUnknownInCatchVariables": false,
+        "skipLibCheck": true,
+        "inlineSources": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+        "declarationDir": "./dist/types",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "playcanvas": ["./node_modules/playcanvas/build/playcanvas/src/index.js"],
+            "@playcanvas/pcui": ["./node_modules/@playcanvas/pcui"]
+        }
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+        "global.d.ts",
+        "vite-env.d.ts"
+    ],
+    "exclude": [
+        "src/debug.ts",
+        "dist",
+        "node_modules"
+    ]
+}
