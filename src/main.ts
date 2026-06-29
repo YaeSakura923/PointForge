@@ -17,6 +17,7 @@ import { registerSelectionEvents } from './selection';
 import { registerSequenceEvents } from './sequence';
 import { ShortcutManager } from './shortcut-manager';
 import { registerTimelineEvents } from './timeline';
+import { initStoreSync } from './store/store-sync';
 import { BoxSelection } from './tools/box-selection';
 import { BrushSelection } from './tools/brush-selection';
 import { EyedropperSelection } from './tools/eyedropper-selection';
@@ -79,6 +80,9 @@ const getURLArgs = () => {
 const main = async () => {
     // root events object
     const events = new Events();
+
+    // sync Zustand stores with engine events
+    initStoreSync(events);
 
     // url
     const url = new URL(window.location.href);
