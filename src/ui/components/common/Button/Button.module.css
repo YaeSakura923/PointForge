@@ -1,0 +1,138 @@
+/* Button.module.css — PointForge design system */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  outline: none;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 2px #f26722;
+}
+
+/* ---- Sizes ---- */
+
+.sm {
+  padding: 4px 10px;
+  font-size: 11px;
+  height: 24px;
+}
+
+.md {
+  padding: 6px 14px;
+  font-size: 12px;
+  height: 30px;
+}
+
+.lg {
+  padding: 8px 20px;
+  font-size: 13px;
+  height: 36px;
+}
+
+/* ---- Variants ---- */
+
+.primary {
+  background-color: #f26722;
+  color: #fff;
+  border-color: #f26722;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: #d4581a;
+  border-color: #d4581a;
+}
+
+.primary:active:not(:disabled) {
+  background-color: #b84a15;
+}
+
+.secondary {
+  background-color: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: #555;
+  border-color: #666;
+}
+
+.secondary:active:not(:disabled) {
+  background-color: #3a3a3a;
+}
+
+.danger {
+  background-color: #d32f2f;
+  color: #fff;
+  border-color: #d32f2f;
+}
+
+.danger:hover:not(:disabled) {
+  background-color: #b71c1c;
+  border-color: #b71c1c;
+}
+
+.danger:active:not(:disabled) {
+  background-color: #9a0007;
+}
+
+.ghost {
+  background-color: transparent;
+  color: #b3aaac;
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.ghost:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ---- States ---- */
+
+.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.loading {
+  cursor: wait;
+}
+
+/* ---- Spinner inside button ---- */
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Full-width utility ---- */
+
+.fullWidth {
+  width: 100%;
+}

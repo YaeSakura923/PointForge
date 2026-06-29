@@ -1,0 +1,107 @@
+/* Toolbar.module.css */
+
+/* ---- Root ---- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+/* ---- Button Group ---- */
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.vertical .group {
+  flex-direction: column;
+}
+
+.horizontal .group {
+  flex-direction: row;
+}
+
+/* ---- Separator ---- */
+
+.separator {
+  background-color: #444;
+  flex-shrink: 0;
+}
+
+.horizontal .separator {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+}
+
+.vertical .separator {
+  width: 20px;
+  height: 1px;
+  margin: 4px 0;
+}
+
+/* ---- Toolbar Button --- */
+
+.toolbarButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #b3aaac;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.12s ease, color 0.12s ease;
+  flex-shrink: 0;
+}
+
+.toolbarButton:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.toolbarButton:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.toolbarButton:focus-visible {
+  box-shadow: 0 0 0 2px #f26722;
+}
+
+/* Active / selected state */
+.active {
+  background-color: #f26722 !important;
+  color: #fff !important;
+}
+
+/* Disabled */
+.toolbarButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* With label (wider) */
+.withLabel {
+  width: auto;
+  padding: 0 10px;
+  gap: 6px;
+  font-size: 12px;
+}

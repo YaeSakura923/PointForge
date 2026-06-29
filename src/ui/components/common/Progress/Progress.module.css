@@ -1,0 +1,81 @@
+/* Progress.module.css */
+
+/* ---- Root ---- */
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---- Header row (label + percentage) ---- */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.label {
+  color: #b3aaac;
+}
+
+.percentage {
+  color: #fff;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Track ---- */
+
+.track {
+  width: 100%;
+  height: 8px;
+  background-color: #505050;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* ---- Fill ---- */
+
+.fill {
+  height: 100%;
+  background-color: #f26722;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+/* ---- Indeterminate animation ---- */
+
+.indeterminate {
+  animation: indeterminate-bar 1.5s ease-in-out infinite;
+  width: 40% !important;
+}
+
+@keyframes indeterminate-bar {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* ---- Variants ---- */
+
+.success .fill {
+  background-color: #43a047;
+}
+
+.warning .fill {
+  background-color: #ffa000;
+}
+
+.danger .fill {
+  background-color: #d32f2f;
+}
+
+/* ---- Sizes ---- */
+
+.sm .track { height: 4px; }
+.md .track { height: 8px; }
+.lg .track { height: 12px; }
